@@ -1,0 +1,2001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>try{if(localStorage.getItem('theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xiyi (Britney) Wang — Data Scientist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      color-scheme: dark;
+      --bg:           #0F0F0F;
+      --bg-card:      #1A1A1A;
+      --bg-section:   #161616;
+      --gold:         #E8A87C;
+      --gold-light:   #F0C4A0;
+      --gold-dim:     #C07840;
+      --text:         #F0EDE8;
+      --text-muted:   #888480;
+      --border:       rgba(255, 255, 255, 0.08);
+      --shadow:       rgba(0, 0, 0, 0.5);
+    }
+
+    /* ── Light mode ── */
+    [data-theme="light"] {
+      color-scheme: light;
+      --bg:           #FDFAF6;
+      --bg-card:      #FFFFFF;
+      --bg-section:   #F7F3EE;
+      --gold:         #C0714F;
+      --gold-light:   #D4896A;
+      --gold-dim:     #8F4E34;
+      --text:         #1A1A1A;
+      --text-muted:   #6B6460;
+      --border:       rgba(0, 0, 0, 0.09);
+      --shadow:       rgba(0, 0, 0, 0.10);
+    }
+
+    [data-theme="light"] nav {
+      background: rgba(253, 250, 246, 0.4);
+      border-bottom-color: rgba(0, 0, 0, 0.06);
+    }
+    [data-theme="light"] nav.scrolled {
+      background: rgba(253, 250, 246, 0.92);
+      border-bottom-color: rgba(0, 0, 0, 0.10);
+    }
+    [data-theme="light"] .about-highlight {
+      background: rgba(192, 113, 79, 0.06);
+    }
+    [data-theme="light"] .timeline::before {
+      background: linear-gradient(to bottom, var(--gold), rgba(192, 113, 79, 0.12));
+    }
+    [data-theme="light"] .timeline-date,
+    [data-theme="light"] .edu-badge,
+    [data-theme="light"] .project-card-badge { background: rgba(192, 113, 79, 0.10); }
+    [data-theme="light"] .skill-tag { background: rgba(0, 0, 0, 0.04); }
+    [data-theme="light"] .project-card { border-color: rgba(0, 0, 0, 0.14); }
+    [data-theme="light"] .project-card:hover {
+      background: rgba(192, 113, 79, 0.04);
+      box-shadow: 0 8px 32px rgba(192, 113, 79, 0.30);
+    }
+    [data-theme="light"] .btn-primary { box-shadow: 0 2px 14px rgba(192, 113, 79, 0.30); }
+    [data-theme="light"] .btn-primary:hover { box-shadow: 0 4px 22px rgba(192, 113, 79, 0.45); }
+    [data-theme="light"] footer {
+      background: #EDE8E2;
+      color: rgba(26, 26, 26, 0.55);
+      border-top-color: rgba(0, 0, 0, 0.08);
+    }
+    [data-theme="light"] .footer-tagline { color: rgba(26, 26, 26, 0.50); }
+    [data-theme="light"] .footer-links a  { color: rgba(26, 26, 26, 0.55); }
+    [data-theme="light"] .footer-copy     { color: rgba(26, 26, 26, 0.38); }
+    [data-theme="light"] .footer-divider  { background: rgba(26, 26, 26, 0.12); }
+
+    /* ── Dark mode readability ── */
+    :root:not([data-theme="light"]) .feat-code-comment { color: #ccc; }
+    :root:not([data-theme="light"]) .feat-label        { color: #ccc; }
+    :root:not([data-theme="light"]) .feat-footer       { color: #aaa; }
+    :root:not([data-theme="light"]) .feat-subtitle     { color: #bbb; }
+    :root:not([data-theme="light"]) .about-num-label   { color: #bbb; }
+
+    /* Body & about text */
+    :root:not([data-theme="light"]) .about-text p    { color: #E8E3DC; }
+    :root:not([data-theme="light"]) .about-highlight { color: #D4CFC8; }
+
+    /* Experience card text */
+    :root:not([data-theme="light"]) .timeline-company  { color: #C8C3BC; }
+    :root:not([data-theme="light"]) .timeline-desc li  { color: #D4CFC8; }
+    :root:not([data-theme="light"]) .timeline-date     { color: #F0C8A8; }
+
+    /* Education card text */
+    :root:not([data-theme="light"]) .edu-meta { color: #C8C3BC; }
+
+    /* Projects placeholder text */
+    :root:not([data-theme="light"]) .project-card-title { color: #E8E3DC; }
+    :root:not([data-theme="light"]) .project-card-soon  { color: #C8C3BC; }
+
+    /* Tech stack tags — brighter text + stronger borders in dark mode */
+    :root:not([data-theme="light"]) .stack-tag-prog  { color: #E0DBD4; background: rgba(46,134,171,0.14);  border-color: rgba(46,134,171,0.60); }
+    :root:not([data-theme="light"]) .stack-tag-ml    { color: #E0DBD4; background: rgba(192,113,79,0.14);  border-color: rgba(192,113,79,0.60); }
+    :root:not([data-theme="light"]) .stack-tag-cloud { color: #E0DBD4; background: rgba(107,143,113,0.14); border-color: rgba(107,143,113,0.60); }
+    :root:not([data-theme="light"]) .stack-tag-viz   { color: #E0DBD4; background: rgba(123,94,167,0.14);  border-color: rgba(123,94,167,0.60); }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      color: var(--text);
+    }
+
+    a {
+      color: var(--gold);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    a:hover { color: var(--gold-light); }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section { padding: 5rem 0; }
+
+    .section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 2.1rem;
+      font-weight: 700;
+      margin-bottom: 2.5rem;
+      position: relative;
+      display: inline-block;
+      color: var(--text);
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 3px;
+      background: var(--gold);
+      border-radius: 2px;
+      margin-top: 0.4rem;
+    }
+
+    /* ── Fade-in on scroll ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger delays for grid siblings */
+    .edu-grid .edu-card:nth-child(2)     { transition-delay: 0.1s; }
+    .projects-grid .project-card:nth-child(2) { transition-delay: 0.1s; }
+    .projects-grid .project-card:nth-child(3) { transition-delay: 0.2s; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(17, 17, 17, 0.4);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 0.85rem 2rem;
+      transition: background 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(17, 17, 17, 0.92);
+      backdrop-filter: blur(20px);
+      border-bottom-color: var(--border);
+    }
+
+    .nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      position: relative;
+      padding-bottom: 3px;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%;
+      height: 1.5px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.25s ease;
+    }
+
+    .nav-links a:hover        { color: var(--gold); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-links a.active        { color: var(--gold); }
+    .nav-links a.active::after { transform: scaleX(1); }
+
+    /* ── Hero ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 5rem;
+      background-color: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-left {
+      width: 52%;
+      padding-left: 150px;
+      padding-right: 2rem;
+    }
+
+    .hero-greeting {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--gold);
+      margin-bottom: 0.55rem;
+    }
+
+    .hero-name {
+      font-size: 55px;
+      font-weight: 700;
+      line-height: 1.08;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .hero-name .name-first {
+      color: var(--text);
+      font-style: normal;
+    }
+
+    .hero-name .name-last {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero-tagline {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: flex-start;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.7rem 1.5rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.22s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: #111;
+      box-shadow: 0 2px 14px rgba(232, 168, 124, 0.35);
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      color: #111;
+      box-shadow: 0 4px 22px rgba(232, 168, 124, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--gold);
+      border: 1.5px solid rgba(232, 168, 124, 0.45);
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      background: rgba(232, 168, 124, 0.08);
+      color: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 1.8rem;
+      font-size: 0.875rem;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .hero-links a {
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: color 0.2s ease;
+    }
+    .hero-links a:hover { color: var(--gold); }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+
+    .scroll-arrow {
+      width: 18px; height: 18px;
+      border-right: 1.5px solid var(--text-muted);
+      border-bottom: 1.5px solid var(--text-muted);
+      transform: rotate(45deg);
+      animation: arrowBounce 1.6s ease-in-out infinite;
+    }
+
+    @keyframes arrowBounce {
+      0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 0.5; }
+      50%       { transform: rotate(45deg) translate(3px, 3px); opacity: 1; }
+    }
+
+    /* ── About ── */
+    #about { background: var(--bg-section); }
+
+    #about .container { padding-left: 0; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: stretch;
+    }
+
+    .about-text p {
+      color: var(--text-muted);
+      margin-bottom: 1.1rem;
+      font-size: 0.975rem;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .about-highlight {
+      background: rgba(232, 168, 124, 0.06);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 1.2rem 1.4rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ── About right column ── */
+    .about-right {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .about-nums-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .about-num-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+    }
+
+    .about-num-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.22rem;
+    }
+
+    .about-num-denom {
+      font-size: 0.85rem;
+      font-weight: 400;
+      opacity: 0.6;
+    }
+
+    .about-num-label {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    .about-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 1.4rem;
+    }
+
+    /* Feature importance */
+    .feat-chart {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid rgba(192, 113, 79, 0.2);
+      border-radius: 8px;
+      padding: 0.6rem 1rem;
+    }
+
+    .feat-code-comment {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      color: #555;
+      line-height: 1.65;
+      margin-bottom: 0.5rem;
+    }
+
+    .feat-heading {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.18rem;
+    }
+
+    .feat-subtitle {
+      font-size: 0.74rem;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-bottom: 0.9rem;
+    }
+
+    .feat-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feat-row {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .feat-label {
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      color: #444;
+      width: 10.5rem;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .feat-bar-wrap {
+      flex: 1;
+      height: 6px;
+      border-radius: 3px;
+    }
+
+    .feat-bar {
+      height: 100%;
+      border-radius: 3px;
+      background: var(--gold);
+      width: 0;
+      transition: width 0.9s ease;
+    }
+
+    .feat-rows .feat-row:nth-child(1) .feat-bar { transition-delay: 0ms; }
+    .feat-rows .feat-row:nth-child(2) .feat-bar { transition-delay: 150ms; }
+    .feat-rows .feat-row:nth-child(3) .feat-bar { transition-delay: 300ms; }
+    .feat-rows .feat-row:nth-child(4) .feat-bar { transition-delay: 450ms; }
+    .feat-rows .feat-row:nth-child(5) .feat-bar { transition-delay: 600ms; }
+
+    .feat-score {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      color: var(--gold);
+      width: 2.4rem;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .feat-footer {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Courier New', monospace;
+      font-size: 0.66rem;
+      color: #888;
+      padding-top: 0.55rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Experience ── */
+    #experience { background: var(--bg); }
+
+    .timeline {
+      position: relative;
+      padding-left: 1.8rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--gold), rgba(232, 168, 124, 0.12));
+      border-radius: 2px;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.8rem;
+    }
+    .timeline-item:last-child { margin-bottom: 0; }
+
+    @keyframes dotPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(232, 168, 124, 0.55); }
+      70%  { box-shadow: 0 0 0 9px rgba(232, 168, 124, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(232, 168, 124, 0); }
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.1rem; top: 8px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--bg);
+      animation: dotPulse 2.6s ease-in-out infinite;
+    }
+
+    .timeline-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.4rem 1.6rem;
+      transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+    }
+    .timeline-card:hover {
+      box-shadow: 0 8px 32px rgba(192, 113, 79, 0.30);
+      transform: translateY(-6px);
+      border-color: rgba(192, 113, 79, 0.40);
+    }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-role {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .timeline-date {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--gold);
+      background: rgba(232, 168, 124, 0.10);
+      padding: 0.2rem 0.65rem;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .timeline-company {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .timeline-desc {
+      list-style: none;
+      padding: 0;
+    }
+
+    .timeline-desc li {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      padding: 0.2rem 0 0.2rem 1.1rem;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .timeline-desc li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-size: 1rem;
+      line-height: 1.5;
+      opacity: 0.55;
+    }
+
+    .stack-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.38rem;
+      margin-top: 0.75rem;
+    }
+
+    .stack-tag {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 0.18rem 0.55rem;
+      border-radius: 20px;
+      border: 1px solid;
+      white-space: nowrap;
+      line-height: 1.6;
+    }
+
+    .stack-tag-prog  { background: rgba(46,134,171,0.08);  color: #2E86AB; border-color: rgba(46,134,171,0.35); }
+    .stack-tag-ml    { background: rgba(192,113,79,0.08);  color: #C0714F; border-color: rgba(192,113,79,0.35); }
+    .stack-tag-cloud { background: rgba(107,143,113,0.08); color: #6B8F71; border-color: rgba(107,143,113,0.35); }
+    .stack-tag-viz   { background: rgba(123,94,167,0.08);  color: #7B5EA7; border-color: rgba(123,94,167,0.35); }
+
+    /* ── Education ── */
+    #education { background: var(--bg-section); }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .edu-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.6rem 1.8rem;
+      transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+    }
+    .edu-card:hover {
+      box-shadow: 0 8px 32px rgba(192, 113, 79, 0.30);
+      transform: translateY(-6px);
+      border-color: rgba(192, 113, 79, 0.40);
+    }
+
+    .edu-degree {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .edu-school {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .edu-meta {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .edu-badge {
+      display: inline-block;
+      margin-top: 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(232, 168, 124, 0.12);
+      color: var(--gold);
+      padding: 0.2rem 0.65rem;
+      border-radius: 20px;
+    }
+
+    /* ── Skills Bubble Chart ── */
+    #skills { background: var(--bg); }
+
+    #skill-bubble-container { position: relative; width: 100%; }
+
+    #skill-svg { display: block; width: 100%; }
+
+    @keyframes bubblePulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.04); }
+    }
+
+    .bubble-group { cursor: pointer; transition: opacity 0.25s ease; }
+
+    .bubble-circle {
+      transition: filter 0.25s ease, fill-opacity 0.25s ease;
+    }
+
+    #skill-tooltip {
+      position: absolute;
+      background: #ffffff;
+      border: 1px solid rgba(192, 113, 79, 0.40);
+      border-radius: 8px;
+      padding: 0.6rem 0.9rem;
+      font-size: 11px;
+      color: #333;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.18s ease;
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.14);
+      z-index: 10;
+      min-width: 170px;
+    }
+    #skill-tooltip.visible { opacity: 1; }
+
+    .tooltip-name { font-weight: 700; font-size: 13px; color: #1a1a1a; margin-bottom: 3px; }
+    .tooltip-cat  { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 7px; }
+    .tooltip-used { font-size: 11px; color: #555; margin-bottom: 2px; }
+    .tooltip-exp  { font-size: 11px; color: #555; }
+
+    .bubble-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.4rem;
+      justify-content: center;
+      margin-top: 1.8rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .legend-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-item {
+      cursor: pointer;
+      padding-bottom: 2px;
+      border-bottom: 1.5px solid transparent;
+      transition: opacity 0.2s ease, border-color 0.2s ease;
+      user-select: none;
+    }
+    .legend-item:hover  { opacity: 0.75; }
+    .legend-item.active { border-bottom-color: var(--gold); opacity: 1; }
+
+    #bubble-filter-label {
+      text-align: center;
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-bottom: 0.55rem;
+      visibility: hidden;
+      min-height: 1.2em;
+    }
+
+    #bubble-hint {
+      text-align: center;
+      font-size: 0.74rem;
+      font-style: italic;
+      color: var(--text-muted);
+      opacity: 0.6;
+      margin-top: 0.55rem;
+    }
+
+    /* ── Projects ── */
+    #projects { background: var(--bg-section); }
+
+    .projects-intro {
+      font-size: 0.975rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1.5px dashed rgba(255, 255, 255, 0.10);
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      min-height: 220px;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    .project-card:hover {
+      border-color: rgba(192, 113, 79, 0.40);
+      border-style: solid;
+      background: rgba(192, 113, 79, 0.04);
+      transform: translateY(-6px);
+      box-shadow: 0 8px 32px rgba(192, 113, 79, 0.30);
+    }
+
+    .project-card-icon { font-size: 2rem; line-height: 1; }
+
+    .project-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .project-card-soon {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .project-card-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: rgba(232, 168, 124, 0.12);
+      color: var(--gold);
+      padding: 0.2rem 0.65rem;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: #0A0A0A;
+      color: rgba(240, 237, 234, 0.55);
+      padding: 3.5rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner { max-width: 900px; margin: 0 auto; }
+
+    .footer-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .footer-tagline {
+      font-size: 0.875rem;
+      color: rgba(240, 237, 234, 0.4);
+      margin-bottom: 1.6rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links a {
+      color: rgba(240, 237, 234, 0.5);
+      font-size: 0.875rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: color 0.2s ease;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-divider {
+      width: 40px; height: 1px;
+      background: rgba(240, 237, 234, 0.10);
+      margin: 0 auto 1.5rem;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(240, 237, 234, 0.28);
+    }
+
+    .footer-cat { font-size: 1.1rem; margin: 0 0.3rem; }
+
+    /* ── Skill list ── */
+    .skill-list {
+      margin-top: 2.8rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem 3.5rem;
+    }
+
+    .skill-list-heading {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .skill-list-items {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      section { padding: 3.5rem 0; }
+      .section-title { font-size: 1.8rem; }
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      #about .container { padding-left: 2rem; }
+      .feat-label { width: 8rem; font-size: 0.62rem; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; max-width: 360px; }
+      .timeline { padding-left: 1.4rem; }
+      .timeline-header { flex-direction: column; gap: 0.3rem; }
+      .hero-name { letter-spacing: -0.01em; }
+      .hero-left { width: 100%; padding-left: 2rem; padding-right: 2rem; }
+      .skill-list { grid-template-columns: 1fr; gap: 1.2rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-cta { flex-direction: column; align-items: flex-start; }
+      .scroll-indicator { display: none; }
+    }
+
+    /* ── Scroll Progress Bar ── */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      width: 0%;
+      height: 3px;
+      background: #C0714F;
+      z-index: 200;
+      pointer-events: none;
+    }
+
+    /* ── Theme Toggle ── */
+    .theme-toggle {
+      background: none;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0.4rem 0.5rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease, border-color 0.2s ease, background-color 0.3s ease;
+      line-height: 0;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+      background-color: rgba(192, 113, 79, 0.08);
+    }
+    .theme-toggle svg { width: 17px; height: 17px; }
+    .icon-sun  { display: none; }
+    .icon-moon { display: block; }
+    [data-theme="light"] .icon-sun  { display: block; }
+    [data-theme="light"] .icon-moon { display: none; }
+
+    /* ── Theme-change transitions ── */
+    body     { transition: background-color 0.3s ease, color 0.3s ease; }
+    section, #hero { transition: background-color 0.3s ease; }
+    footer   { transition: background-color 0.3s ease, color 0.3s ease, border-top-color 0.3s ease; }
+    .about-highlight { transition: background-color 0.3s ease; }
+    .stat-card     { transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease; }
+    .timeline-card { transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease; }
+    .edu-card      { transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease; }
+    .project-card  { transition: all 0.3s ease; }
+  </style>
+</head>
+<body>
+
+  <div id="scroll-progress"></div>
+
+  <!-- Navigation -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <span class="nav-logo">Britney Wang</span>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+      </ul>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <p class="hero-greeting">Hi there, I'm</p>
+        <h1 class="hero-name"><span class="name-first">Britney</span><em class="name-last"> Wang</em></h1>
+        <p class="hero-tagline">Data Scientist · AI & Data Enthusiast</p>
+        <div class="hero-cta">
+          <a href="mailto:wangxiyi0412@outlook.com" class="btn btn-primary">Get in touch</a>
+          <a href="#experience" class="btn btn-outline">See my work</a>
+        </div>
+        <div class="hero-links">
+          <a href="https://www.linkedin.com/in/xiyi-wang/" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://github.com/britneywxy" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            GitHub
+          </a>
+          <a href="mailto:wangxiyi0412@outlook.com">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Email
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span>scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <p class="section-label fade-in">Who I am</p>
+      <h2 class="section-title fade-in">About Me</h2>
+      <div class="about-grid">
+        <div class="about-text fade-in">
+          <p>
+            I'm a data scientist with a passion for turning messy, real-world data into clear decisions. I hold an MS in Data Analytics for Science from Carnegie Mellon University (GPA 4.18) and a BS in Applied &amp; Computational Mathematics from the University of Washington.
+          </p>
+          <p>
+            Currently, I work as a Research Data Scientist at UPMC in the Department of Hematology, where I build ML models for patient segmentation, automate data pipelines on GCP, and analyze 400+ clinical measures across multiple active research projects.
+          </p>
+          <p>
+            I've always been drawn to the intersection of rigorous analysis and practical impact — whether that's predicting player lifetime value at a mobile gaming company, forecasting time-series with ARIMA, or building AI-powered tools from scratch.
+          </p>
+          <div class="about-highlight">
+            Right now I'm actively building AI-powered projects and looking for Data Scientist roles where I can work at the frontier of ML and AI. 🐱 (My cat thinks I should take more breaks, but she's biased.)
+          </div>
+        </div>
+        <div class="about-right fade-in">
+          <!-- 2×2 compact number grid -->
+          <div class="about-nums-grid">
+            <div class="about-num-card">
+              <div class="about-num-value">4.18<span class="about-num-denom">/4.33</span></div>
+              <div class="about-num-label">GPA at Carnegie Mellon</div>
+            </div>
+            <div class="about-num-card">
+              <div class="about-num-value">400+</div>
+              <div class="about-num-label">Clinical measures at UPMC</div>
+            </div>
+            <div class="about-num-card">
+              <div class="about-num-value">2.5+ <span style="font-size:14px;font-weight:400">yrs</span></div>
+              <div class="about-num-label">Professional DS experience</div>
+            </div>
+            <div class="about-num-card">
+              <div class="about-num-value">1M+</div>
+              <div class="about-num-label">Data records processed</div>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="about-divider"></div>
+
+          <!-- Feature importance chart -->
+          <div class="feat-chart">
+            <div class="feat-code-comment"><span style="color:#C0714F"># model:</span> Britney Wang v2026<br><span style="color:#C0714F"># method:</span> self_assessment(honest=True)</div>
+            <div class="feat-heading">Feature Importance</div>
+            <div class="feat-subtitle">How much each trait drives my work</div>
+            <div class="feat-rows">
+              <div class="feat-row">
+                <span class="feat-label">analytical_thinking</span>
+                <div class="feat-bar-wrap"><div class="feat-bar" data-width="100%"></div></div>
+                <span class="feat-score">0.32</span>
+              </div>
+              <div class="feat-row">
+                <span class="feat-label">domain_expertise</span>
+                <div class="feat-bar-wrap"><div class="feat-bar" data-width="75%"></div></div>
+                <span class="feat-score">0.24</span>
+              </div>
+              <div class="feat-row">
+                <span class="feat-label">execution_speed</span>
+                <div class="feat-bar-wrap"><div class="feat-bar" data-width="56%"></div></div>
+                <span class="feat-score">0.18</span>
+              </div>
+              <div class="feat-row">
+                <span class="feat-label">cross_functional_comms</span>
+                <div class="feat-bar-wrap"><div class="feat-bar" data-width="47%"></div></div>
+                <span class="feat-score">0.15</span>
+              </div>
+              <div class="feat-row">
+                <span class="feat-label">learning_rate</span>
+                <div class="feat-bar-wrap"><div class="feat-bar" data-width="34%"></div></div>
+                <span class="feat-score">0.11</span>
+              </div>
+            </div>
+            <div class="feat-footer">
+              <span>sum(importance) = 1.00 ✓</span>
+              <span>n_features = 5</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="container">
+      <p class="section-label fade-in">Where I've worked</p>
+      <h2 class="section-title fade-in">Experience</h2>
+      <div class="timeline">
+
+        <div class="timeline-item fade-in">
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <span class="timeline-role">Research Data Scientist</span>
+              <span class="timeline-date">Jan 2025 – Present</span>
+            </div>
+            <div class="timeline-company">🏥 University of Pittsburgh Medical Center (UPMC) · Pittsburgh, PA</div>
+            <ul class="timeline-desc">
+              <li>Conduct statistical analysis in R across <strong>400+ clinical measures</strong> spanning <strong>4+ active research projects</strong></li>
+              <li>Build ML models for patient segmentation to support clinical decision-making</li>
+              <li>Design and maintain automated data pipelines on Google Cloud Platform</li>
+              <li>Collaborate with clinical researchers to translate complex findings into actionable insights</li>
+            </ul>
+            <div class="stack-tags">
+              <span class="stack-tag stack-tag-prog">R</span>
+              <span class="stack-tag stack-tag-prog">Python</span>
+              <span class="stack-tag stack-tag-prog">SQL</span>
+              <span class="stack-tag stack-tag-cloud">GCP</span>
+              <span class="stack-tag stack-tag-cloud">REDCap</span>
+              <span class="stack-tag stack-tag-ml">ML Clustering</span>
+              <span class="stack-tag stack-tag-ml">Mixed-effects Models</span>
+              <span class="stack-tag stack-tag-ml">Network Analysis</span>
+              <span class="stack-tag stack-tag-cloud">Data Pipeline Automation</span>
+              <span class="stack-tag stack-tag-viz">Statistical Reporting</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item fade-in">
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <span class="timeline-role">Business Data Analyst</span>
+              <span class="timeline-date">Jul 2024 – Jan 2025</span>
+            </div>
+            <div class="timeline-company">🎮 Kooapps · Bellevue, WA</div>
+            <ul class="timeline-desc">
+              <li>Used SQL and Python to analyze KPIs and uncover growth opportunities across game titles</li>
+              <li>Built LTV prediction models using regression techniques to inform user acquisition strategy</li>
+              <li>Created Tableau dashboards for game performance monitoring used by product and marketing teams</li>
+            </ul>
+            <div class="stack-tags">
+              <span class="stack-tag stack-tag-prog">SQL</span>
+              <span class="stack-tag stack-tag-prog">Python</span>
+              <span class="stack-tag stack-tag-ml">Regression</span>
+              <span class="stack-tag stack-tag-ml">LTV Modeling</span>
+              <span class="stack-tag stack-tag-viz">Tableau Dashboard</span>
+              <span class="stack-tag stack-tag-ml">A/B Testing</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item fade-in">
+          <div class="timeline-card" style="border-color: rgba(107,143,113,0.40);">
+            <div class="timeline-header">
+              <span class="timeline-role">Data Science Capstone Project</span>
+              <span class="timeline-date">Jan 2024 – May 2024</span>
+            </div>
+            <div class="timeline-company">🧬 Merck (CMU Capstone) · Pittsburgh, PA</div>
+            <ul class="timeline-desc">
+              <li>Installed and utilized advanced protein prediction models including AlphaFold, OmegaFold, RosettaFold, and ESMFold to predict protein structures</li>
+              <li>Conducted comprehensive performance comparisons using RMSD metrics</li>
+              <li>Performed deformation analysis and benchmarked model performance using Effective Strain score</li>
+              <li>Visualized prediction results and protein structures using PyMol</li>
+            </ul>
+            <div class="stack-tags">
+              <span class="stack-tag stack-tag-ml">AlphaFold</span>
+              <span class="stack-tag stack-tag-ml">OmegaFold</span>
+              <span class="stack-tag stack-tag-ml">RosettaFold</span>
+              <span class="stack-tag stack-tag-ml">RMSD Analysis</span>
+              <span class="stack-tag stack-tag-viz">PyMol</span>
+              <span class="stack-tag stack-tag-prog">Python</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item fade-in">
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <span class="timeline-role">Data Scientist Intern</span>
+              <span class="timeline-date">Sep 2023 – Feb 2024</span>
+            </div>
+            <div class="timeline-company">💻 Eth Tech · Remote</div>
+            <ul class="timeline-desc">
+              <li>Designed Tableau dashboards for stakeholder reporting and trend monitoring</li>
+              <li>Developed ARIMA time-series forecasting models achieving <strong>89%</strong> accuracy</li>
+              <li>Built Random Forest user segmentation pipelines using PySpark at scale</li>
+            </ul>
+            <div class="stack-tags">
+              <span class="stack-tag stack-tag-prog">PySpark</span>
+              <span class="stack-tag stack-tag-ml">ARIMA</span>
+              <span class="stack-tag stack-tag-ml">Time Series Analysis</span>
+              <span class="stack-tag stack-tag-ml">Random Forest</span>
+              <span class="stack-tag stack-tag-viz">Tableau</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item fade-in">
+          <div class="timeline-card">
+            <div class="timeline-header">
+              <span class="timeline-role">Product &amp; Operations Analyst Intern</span>
+              <span class="timeline-date">Jun 2021 – Sep 2021</span>
+            </div>
+            <div class="timeline-company">🛵 Meituan · Beijing, China</div>
+            <ul class="timeline-desc">
+              <li>Applied K-means clustering to segment users by behavior and purchasing patterns</li>
+              <li>Designed and analyzed A/B tests to evaluate product feature rollouts</li>
+              <li>Built a collaborative filtering recommendation model to improve content personalization</li>
+            </ul>
+            <div class="stack-tags">
+              <span class="stack-tag stack-tag-prog">Python</span>
+              <span class="stack-tag stack-tag-prog">SQL</span>
+              <span class="stack-tag stack-tag-ml">K-means</span>
+              <span class="stack-tag stack-tag-ml">A/B Testing</span>
+              <span class="stack-tag stack-tag-ml">Collaborative Filtering</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section id="education">
+    <div class="container">
+      <p class="section-label fade-in">Where I studied</p>
+      <h2 class="section-title fade-in">Education</h2>
+      <div class="edu-grid">
+
+        <div class="edu-card fade-in">
+          <div class="edu-degree">MS in Data Analytics for Science</div>
+          <div class="edu-school">Carnegie Mellon University</div>
+          <div class="edu-meta">
+            Pittsburgh, PA &nbsp;·&nbsp; Aug 2023 – May 2024<br/>
+            GPA: 4.18 / 4.33
+          </div>
+          <div style="font-size: 11px; color: #999; font-family: 'Inter', sans-serif; margin-top: 0.85rem; margin-bottom: 0.35rem;">Relevant Courses:</div>
+          <div class="stack-tags">
+            <span class="stack-tag stack-tag-ml">Machine Learning</span>
+            <span class="stack-tag stack-tag-ml">Deep Learning</span>
+            <span class="stack-tag stack-tag-ml">Statistical Computing</span>
+            <span class="stack-tag stack-tag-ml">Prompt Engineering</span>
+          </div>
+        </div>
+
+        <div class="edu-card fade-in">
+          <div class="edu-degree">BS in Applied &amp; Computational Mathematical Sciences</div>
+          <div class="edu-school">University of Washington</div>
+          <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.35rem; opacity: 0.75;">Concentration: Data Science &amp; Statistics</div>
+          <div class="edu-meta">
+            Seattle, WA &nbsp;·&nbsp; Sep 2019 – Jun 2023<br/>
+            GPA: 3.87 / 4.00 · <span style="color:#C0714F; font-weight:500">Dean's List</span>
+          </div>
+          <div style="font-size: 11px; color: #999; font-family: 'Inter', sans-serif; margin-top: 0.85rem; margin-bottom: 0.35rem;">Relevant Courses:</div>
+          <div class="stack-tags">
+            <span class="stack-tag stack-tag-ml">Data Structures &amp; Algorithms</span>
+            <span class="stack-tag stack-tag-ml">Probability Theory</span>
+            <span class="stack-tag stack-tag-ml">Linear Algebra</span>
+            <span class="stack-tag stack-tag-ml">Regression Analysis</span>
+            <span class="stack-tag stack-tag-ml">AI</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="container">
+      <p class="section-label fade-in">What I work with</p>
+      <h2 class="section-title fade-in">Skills</h2>
+      <div id="skill-bubble-container" class="fade-in">
+        <svg id="skill-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Skill proficiency bubble chart"></svg>
+        <div id="skill-tooltip" role="tooltip">
+          <div class="tooltip-name"></div>
+          <div class="tooltip-cat"></div>
+          <div class="tooltip-used"></div>
+          <div class="tooltip-exp"></div>
+        </div>
+      </div>
+      <div id="bubble-filter-label"></div>
+      <div class="bubble-legend fade-in">
+        <div class="legend-item" data-category="Programming"><span class="legend-dot" data-color="#2E86AB" style="background:#2E86AB"></span>Programming</div>
+        <div class="legend-item" data-category="ML / AI"><span class="legend-dot" data-color="#C0714F" style="background:#C0714F"></span>ML / AI</div>
+        <div class="legend-item" data-category="Data / Cloud"><span class="legend-dot" data-color="#6B8F71" style="background:#6B8F71"></span>Data / Cloud</div>
+        <div class="legend-item" data-category="Visualization"><span class="legend-dot" data-color="#7B5EA7" style="background:#7B5EA7"></span>Visualization</div>
+      </div>
+      <div id="bubble-hint">click a category to explore</div>
+      <div class="skill-list fade-in">
+        <div>
+          <div class="skill-list-heading">Programming &amp; Data</div>
+          <div class="skill-list-items">Python, R, SQL, Java, MATLAB, Pandas, NumPy, PySpark</div>
+        </div>
+        <div>
+          <div class="skill-list-heading">ML / AI</div>
+          <div class="skill-list-items">Machine Learning, Scikit-learn, LangChain, Claude API, Prompt Engineering, Random Forest, Gradient Boosting, Neural Networks, Clustering, A/B Testing, Time Series Analysis</div>
+        </div>
+        <div>
+          <div class="skill-list-heading">Data &amp; Cloud</div>
+          <div class="skill-list-items">GCP, AWS, Databricks, Apache Spark, BigQuery, REDCap</div>
+        </div>
+        <div>
+          <div class="skill-list-heading">Visualization &amp; BI</div>
+          <div class="skill-list-items">Tableau, Power BI, matplotlib, seaborn, ggplot2</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="container">
+      <p class="section-label fade-in">What I'm building</p>
+      <h2 class="section-title fade-in">Projects</h2>
+      <p class="projects-intro fade-in">
+        I'm currently building AI-powered projects in my spare time. Check back soon — things are cooking.
+      </p>
+
+      <!-- ADD NEW PROJECTS HERE -->
+      <div class="projects-grid">
+
+        <div class="project-card fade-in">
+          <div class="project-card-icon">🤖</div>
+          <div class="project-card-title">AI Project #1</div>
+          <div class="project-card-soon">Coming soon — check back soon!</div>
+          <span class="project-card-badge">In Progress</span>
+        </div>
+
+        <div class="project-card fade-in">
+          <div class="project-card-icon">📊</div>
+          <div class="project-card-title">ML Project #2</div>
+          <div class="project-card-soon">Coming soon — check back soon!</div>
+          <span class="project-card-badge">In Progress</span>
+        </div>
+
+        <div class="project-card fade-in">
+          <div class="project-card-icon">✨</div>
+          <div class="project-card-title">Data Project #3</div>
+          <div class="project-card-soon">Coming soon — check back soon!</div>
+          <span class="project-card-badge">In Progress</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-name">Xiyi (Britney) Wang</div>
+      <div class="footer-tagline">Data Scientist · AI Practitioner <span class="footer-cat">🐱</span> Pittsburgh, PA</div>
+      <div class="footer-links">
+        <a href="mailto:wangxiyi0412@outlook.com">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          wangxiyi0412@outlook.com
+        </a>
+        <a href="https://www.linkedin.com/in/xiyi-wang/" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/britneywxy" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          GitHub
+        </a>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-copy">© 2025 Xiyi (Britney) Wang · Built with care (and coffee)</div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll progress bar
+    const progressBar = document.getElementById('scroll-progress');
+    function updateProgress() {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (scrollable > 0 ? (window.scrollY / scrollable * 100) : 0) + '%';
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (isLight) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+      }
+      window._rebuildBubbles && window._rebuildBubbles();
+    });
+
+    // Nav frosted glass on scroll
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Fade-in on scroll via Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Active nav link tracks current section
+    const navSections = document.querySelectorAll('section[id]');
+    const navLinks    = document.querySelectorAll('.nav-links a');
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        if (entry.target.id === 'hero') {
+          navLinks.forEach(a => a.classList.remove('active'));
+        } else {
+          navLinks.forEach(a =>
+            a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id)
+          );
+        }
+      });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+    navSections.forEach(s => navObserver.observe(s));
+
+    // Feature importance bar animation
+    const featRows = document.querySelector('.feat-rows');
+    if (featRows) {
+      const featObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.querySelectorAll('.feat-bar').forEach(bar => {
+            bar.style.width = bar.dataset.width;
+          });
+          featObserver.unobserve(entry.target);
+        });
+      }, { threshold: 0.25 });
+      featObserver.observe(featRows);
+    }
+
+    // ── Hero Canvas ──
+    (function () {
+      const canvas = document.getElementById('hero-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      const CURVES = [
+        { label: 'model accuracy',   color: '#C0714F', speed: 0.80, phase: 0.00 },
+        { label: 'domain expertise', color: '#2E86AB', speed: 0.45, phase: 2.10 },
+        { label: 'technical depth',  color: '#6B8F71', speed: 0.62, phase: 4.20 },
+      ];
+      const LABEL_X = [0.68, 0.78, 0.88];
+
+      function hexRgba(hex, a) {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r},${g},${b},${a})`;
+      }
+
+      function resize() {
+        canvas.width  = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
+
+      let rafId, startTime = null;
+
+      function draw(ts) {
+        if (!startTime) startTime = ts;
+        const t = (ts - startTime) * 0.001;
+        const W = canvas.width, H = canvas.height;
+        if (!W || !H) { rafId = requestAnimationFrame(draw); return; }
+
+        const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+        const maxOp  = isDark ? 0.82 : 0.70;
+
+        ctx.clearRect(0, 0, W, H);
+
+        const axisY = H * 0.87;
+        const baseY = H * 0.72;
+        const N     = 240;
+
+        // X-axis line
+        ctx.save();
+        ctx.strokeStyle = 'rgba(128,128,128,0.10)';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(0, axisY); ctx.lineTo(W, axisY); ctx.stroke();
+        ctx.restore();
+
+        // Year labels + ticks
+        ['2019', '2020', '2021', '2022', '2023', '2024', '2025', 'now'].forEach((yr, i, arr) => {
+          const x = W * (0.05 + 0.90 * i / (arr.length - 1));
+          ctx.save();
+          ctx.fillStyle   = 'rgba(136,136,136,0.50)';
+          ctx.font        = '9px monospace';
+          ctx.textAlign   = 'center';
+          ctx.fillText(yr, x, axisY + 16);
+          ctx.strokeStyle = 'rgba(136,136,136,0.40)';
+          ctx.lineWidth   = 1.5;
+          ctx.beginPath(); ctx.moveTo(x, axisY - 5); ctx.lineTo(x, axisY + 5); ctx.stroke();
+          ctx.restore();
+        });
+
+        // Dashed baseline "industry avg"
+        ctx.save();
+        ctx.setLineDash([4, 6]);
+        ctx.strokeStyle = 'rgba(128,128,128,0.10)';
+        ctx.lineWidth   = 1;
+        ctx.beginPath(); ctx.moveTo(0, baseY); ctx.lineTo(W, baseY); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = 'rgba(128,128,128,0.10)';
+        ctx.font      = '8px monospace';
+        ctx.textAlign = 'right';
+        ctx.fillText('industry avg', W - 8, baseY - 4);
+        ctx.restore();
+
+        // Draw each curve
+        CURVES.forEach((cv, ci) => {
+          const pts = [];
+          for (let i = 0; i <= N; i++) {
+            const xf     = i / N;
+            const x      = xf * W;
+            const freq   = 3.0 + ci * 0.5;
+            const trend  = H * (0.82 - 0.67 * xf);
+            const wobble = Math.sin(xf * Math.PI * freq + t * cv.speed + cv.phase) * H * 0.033;
+            pts.push({ x, y: trend + wobble, xf });
+          }
+
+          // Stroke: nearly invisible behind name (left 30%), visible right
+          const sg = ctx.createLinearGradient(0, 0, W, 0);
+          sg.addColorStop(0,    hexRgba(cv.color, 0.04));
+          sg.addColorStop(0.30, hexRgba(cv.color, 0.04));
+          sg.addColorStop(0.40, hexRgba(cv.color, maxOp * 0.28));
+          sg.addColorStop(0.52, hexRgba(cv.color, maxOp));
+          sg.addColorStop(0.82, hexRgba(cv.color, maxOp));
+          sg.addColorStop(1.00, hexRgba(cv.color, 0.06));
+
+          ctx.save();
+          ctx.strokeStyle = sg;
+          ctx.lineWidth   = 2;
+          ctx.lineJoin    = 'round';
+          ctx.lineCap     = 'round';
+          ctx.beginPath();
+          pts.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y));
+          ctx.stroke();
+
+          // Area fill below curve
+          const fg = ctx.createLinearGradient(0, 0, W, 0);
+          fg.addColorStop(0,    hexRgba(cv.color, 0));
+          fg.addColorStop(0.30, hexRgba(cv.color, 0));
+          fg.addColorStop(0.40, hexRgba(cv.color, 0.005));
+          fg.addColorStop(0.52, hexRgba(cv.color, 0.04));
+          fg.addColorStop(0.82, hexRgba(cv.color, 0.04));
+          fg.addColorStop(1.00, hexRgba(cv.color, 0));
+
+          ctx.fillStyle = fg;
+          ctx.beginPath();
+          pts.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y));
+          ctx.lineTo(W, axisY); ctx.lineTo(0, axisY); ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+
+          // Label + dot on curve
+          const lxi = Math.round(LABEL_X[ci] * N);
+          const lp  = pts[Math.min(lxi, pts.length - 1)];
+          ctx.save();
+          ctx.fillStyle = hexRgba(cv.color, isDark ? 0.85 : 0.55);
+          ctx.font      = '9px monospace';
+          ctx.textAlign = 'left';
+          ctx.fillText(cv.label, lp.x, lp.y - 9);
+          ctx.beginPath();
+          ctx.arc(lp.x, lp.y, 2.5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        });
+
+        rafId = requestAnimationFrame(draw);
+      }
+
+      function start() {
+        cancelAnimationFrame(rafId);
+        startTime = null;
+        resize();
+        rafId = requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', () => {
+        cancelAnimationFrame(rafId);
+        resize();
+        startTime = null;
+        rafId = requestAnimationFrame(draw);
+      });
+
+      window.addEventListener('load', start);
+    })();
+
+    // ── Skill Bubble Chart ──
+    (function () {
+      const NS = 'http://www.w3.org/2000/svg';
+      let activeCategory = null;
+
+      const SKILLS = [
+        { name: 'Python',             lines: ['Python'],                category: 'Programming',   color: '#2E86AB', size: 'large',  usedAt: 'UPMC · Kooapps · Eth Tech · Meituan', exp: '4+ years'  },
+        { name: 'SQL',                lines: ['SQL'],                   category: 'Programming',   color: '#2E86AB', size: 'large',  usedAt: 'UPMC · Kooapps · Eth Tech · Meituan', exp: '4+ years'  },
+        { name: 'Machine Learning',   lines: ['Machine', 'Learning'],   category: 'ML / AI',       color: '#C0714F', size: 'large',  usedAt: 'UPMC · Kooapps · Eth Tech · Meituan', exp: '4+ years'  },
+        { name: 'R',                  lines: ['R'],                     category: 'Programming',   color: '#2E86AB', size: 'large',  usedAt: 'UPMC',                                exp: '4+ years'  },
+        { name: 'Scikit-learn',       lines: ['Scikit-learn'],          category: 'ML / AI',       color: '#C0714F', size: 'large',  usedAt: 'UPMC · Kooapps · Eth Tech',           exp: '3+ years'  },
+        { name: 'Prompt Engineering', lines: ['Prompt', 'Engineering'], category: 'ML / AI',       color: '#C0714F', size: 'large',  usedAt: 'CMU · Personal projects',             exp: '2+ years'  },
+        { name: 'PySpark',            lines: ['PySpark'],               category: 'Programming',   color: '#2E86AB', size: 'medium', usedAt: 'Eth Tech',                            exp: '2+ years'  },
+        { name: 'Tableau',            lines: ['Tableau'],               category: 'Visualization', color: '#7B5EA7', size: 'medium', usedAt: 'Kooapps · Eth Tech',                  exp: '2+ years'  },
+        { name: 'GCP',                lines: ['GCP'],                   category: 'Data / Cloud',  color: '#6B8F71', size: 'medium', usedAt: 'UPMC',                                exp: '1+ year'   },
+        { name: 'AWS',                lines: ['AWS'],                   category: 'Data / Cloud',  color: '#6B8F71', size: 'medium', usedAt: 'Various projects',                    exp: '1+ year'   },
+        { name: 'Pandas',             lines: ['Pandas'],                category: 'Programming',   color: '#2E86AB', size: 'medium', usedAt: 'UPMC · Kooapps · Eth Tech',           exp: '4+ years'  },
+        { name: 'NumPy',              lines: ['NumPy'],                  category: 'Programming',   color: '#2E86AB', size: 'medium', usedAt: 'UPMC · Kooapps · Eth Tech',           exp: '4+ years'  },
+        { name: 'LangChain',          lines: ['LangChain'],             category: 'ML / AI',       color: '#C0714F', size: 'medium', usedAt: 'Personal projects',                   exp: 'Learning'  },
+        { name: 'Claude API',         lines: ['Claude', 'API'],         category: 'ML / AI',       color: '#C0714F', size: 'medium', usedAt: 'Personal projects',                   exp: 'Learning'  },
+        { name: 'Databricks',         lines: ['Databricks'],            category: 'Data / Cloud',  color: '#6B8F71', size: 'medium', usedAt: 'Personal projects',                   exp: 'Learning'  },
+        { name: 'Java',               lines: ['Java'],                  category: 'Programming',   color: '#2E86AB', size: 'small',  usedAt: 'UW',                                  exp: '2+ years'  },
+        { name: 'MATLAB',             lines: ['MATLAB'],                category: 'Programming',   color: '#2E86AB', size: 'small',  usedAt: 'CMU · UW',                            exp: '3+ years'  },
+        { name: 'Power BI',           lines: ['Power', 'BI'],           category: 'Visualization', color: '#7B5EA7', size: 'small',  usedAt: 'Various',                             exp: '1+ year'   },
+        { name: 'REDCap',             lines: ['REDCap'],                category: 'Data / Cloud',  color: '#6B8F71', size: 'small',  usedAt: 'UPMC',                                exp: '1+ year'   },
+      ];
+
+      function buildChart() {
+        const container = document.getElementById('skill-bubble-container');
+        const svg       = document.getElementById('skill-svg');
+        const tooltip   = document.getElementById('skill-tooltip');
+        const ttName    = tooltip.querySelector('.tooltip-name');
+        const ttCat     = tooltip.querySelector('.tooltip-cat');
+        const ttUsed    = tooltip.querySelector('.tooltip-used');
+        const ttExp     = tooltip.querySelector('.tooltip-exp');
+
+        const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+        const COLOR_MAP = isDark ? {
+          '#2E86AB': '#4A7A8A',
+          '#C0714F': '#8B5E48',
+          '#6B8F71': '#4A6B50',
+          '#7B5EA7': '#5A4870',
+        } : {};
+        const resolveColor = c => COLOR_MAP[c] || c;
+
+        const cw     = container.offsetWidth;
+        const mobile = cw < 560;
+        const W      = mobile ? 420 : 800;
+        const H      = mobile ? 760 : 580;
+        const cx     = W / 2, cy = H / 2;
+
+        const RADII = { large: mobile ? 46 : 55, medium: mobile ? 32 : 38, small: mobile ? 22 : 26 };
+        const FONTS = { large: mobile ? 13 : 16, medium: mobile ? 11 : 12, small: mobile ?  9 : 10 };
+
+        // Initialise positions evenly around a circle
+        const bubbles = SKILLS.map((s, i) => {
+          const r     = RADII[s.size];
+          const angle = (i / SKILLS.length) * Math.PI * 2;
+          const dist  = mobile ? 110 : 170;
+          return { ...s, r, x: cx + Math.cos(angle) * dist, y: cy + Math.sin(angle) * dist, vx: 0, vy: 0 };
+        });
+
+        // Force-directed relaxation
+        for (let t = 0; t < 500; t++) {
+          const alpha = Math.max(0.05, 1 - t / 450);
+
+          // Gravity toward centre
+          bubbles.forEach(b => {
+            b.vx += (cx - b.x) * 0.02 * alpha;
+            b.vy += (cy - b.y) * 0.02 * alpha;
+          });
+
+          // Pairwise repulsion to avoid overlap
+          for (let i = 0; i < bubbles.length; i++) {
+            for (let j = i + 1; j < bubbles.length; j++) {
+              const p = bubbles[i], q = bubbles[j];
+              const dx = q.x - p.x, dy = q.y - p.y;
+              const d2 = dx * dx + dy * dy;
+              const mn = p.r + q.r + 5;
+              if (d2 < mn * mn) {
+                const d = Math.sqrt(d2) || 0.001;
+                const f = (mn - d) / d * 0.6 * alpha;
+                p.vx -= dx * f; p.vy -= dy * f;
+                q.vx += dx * f; q.vy += dy * f;
+              }
+            }
+          }
+
+          // Integrate with damping + boundary clamp
+          bubbles.forEach(b => {
+            b.vx *= 0.85; b.vy *= 0.85;
+            b.x = Math.max(b.r + 4, Math.min(W - b.r - 4, b.x + b.vx));
+            b.y = Math.max(b.r + 4, Math.min(H - b.r - 4, b.y + b.vy));
+          });
+        }
+
+        // Re-centre cluster so it is visually centred in the canvas
+        const avgX = bubbles.reduce((s, b) => s + b.x, 0) / bubbles.length;
+        const avgY = bubbles.reduce((s, b) => s + b.y, 0) / bubbles.length;
+        const shiftX = cx - avgX, shiftY = cy - avgY;
+        bubbles.forEach(b => {
+          b.x = Math.max(b.r + 4, Math.min(W - b.r - 4, b.x + shiftX));
+          b.y = Math.max(b.r + 4, Math.min(H - b.r - 4, b.y + shiftY));
+        });
+
+        svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+        const defaultOp = isDark ? '0.75' : '0.82';
+
+        // Pass 1: create all SVG elements, collect {g, circle, b} records
+        const groups = bubbles.map((b, i) => {
+          const g = document.createElementNS(NS, 'g');
+          g.classList.add('bubble-group');
+          g.style.transformOrigin = `${b.x.toFixed(1)}px ${b.y.toFixed(1)}px`;
+          g.style.animation = `bubblePulse ${(3.5 + (i % 5) * 0.65).toFixed(2)}s ease-in-out ${((i * 0.42) % 3).toFixed(2)}s infinite`;
+
+          const circle = document.createElementNS(NS, 'circle');
+          circle.classList.add('bubble-circle');
+          circle.setAttribute('cx', b.x.toFixed(1));
+          circle.setAttribute('cy', b.y.toFixed(1));
+          circle.setAttribute('r',  b.r);
+          circle.setAttribute('fill', resolveColor(b.color));
+          circle.setAttribute('fill-opacity', defaultOp);
+          g.appendChild(circle);
+
+          const textEl = document.createElementNS(NS, 'text');
+          textEl.setAttribute('x', b.x.toFixed(1));
+          textEl.setAttribute('y', b.y.toFixed(1));
+          textEl.setAttribute('font-size', FONTS[b.size]);
+          textEl.setAttribute('text-anchor', 'middle');
+          textEl.setAttribute('dominant-baseline', 'central');
+          textEl.setAttribute('fill', '#fff');
+          textEl.setAttribute('font-family', 'Inter, sans-serif');
+          textEl.setAttribute('font-weight', '600');
+          textEl.style.pointerEvents = 'none';
+          textEl.style.userSelect    = 'none';
+
+          if (b.lines.length === 1) {
+            textEl.textContent = b.lines[0];
+          } else {
+            const lh = 1.15;
+            const startDy = -((b.lines.length - 1) / 2) * lh;
+            b.lines.forEach((ln, li) => {
+              const ts = document.createElementNS(NS, 'tspan');
+              ts.setAttribute('x', b.x.toFixed(1));
+              ts.setAttribute('dy', li === 0 ? `${startDy}em` : `${lh}em`);
+              ts.textContent = ln;
+              textEl.appendChild(ts);
+            });
+          }
+          g.appendChild(textEl);
+          svg.appendChild(g);
+          return { g, circle, b };
+        });
+
+        // Pass 2: wire hover interactions now that all groups exist
+        groups.forEach(({ g, circle, b }) => {
+          function showTip(e) {
+            // Category highlight: same cat → full opacity, others → dim
+            groups.forEach(({ g: og, circle: oc, b: ob }) => {
+              if (ob.category === b.category) {
+                og.style.opacity = '1';
+                oc.setAttribute('fill-opacity', '1');
+              } else {
+                og.style.opacity = '0.18';
+              }
+            });
+            circle.style.filter = `drop-shadow(0 0 12px ${resolveColor(b.color)}bb)`;
+
+            // Rich tooltip
+            ttName.textContent      = b.name;
+            ttCat.textContent       = b.category;
+            ttCat.style.color       = resolveColor(b.color);
+            ttUsed.textContent      = 'Used at: ' + b.usedAt;
+            ttExp.textContent       = 'Experience: ' + b.exp;
+            tooltip.classList.add('visible');
+            moveTip(e);
+          }
+
+          function moveTip(e) {
+            const src = e.touches ? e.touches[0] : e;
+            const rc  = container.getBoundingClientRect();
+            const mx  = src.clientX - rc.left;
+            const my  = src.clientY - rc.top;
+            const tw  = tooltip.offsetWidth  || 180;
+            const th  = tooltip.offsetHeight || 70;
+            let tipX  = mx + 16;
+            let tipY  = my - th - 12;
+            if (tipX + tw > rc.width - 4)  tipX = mx - tw - 16;
+            if (tipY < 4)                   tipY = my + 16;
+            tooltip.style.left = tipX + 'px';
+            tooltip.style.top  = tipY + 'px';
+          }
+
+          function hideTip() {
+            groups.forEach(({ g: og, circle: oc }) => {
+              og.style.opacity = '1';
+              oc.setAttribute('fill-opacity', defaultOp);
+              oc.style.filter = '';
+            });
+            circle.style.filter = '';
+            tooltip.classList.remove('visible');
+            if (activeCategory) window._applyBubbleFilter(activeCategory);
+          }
+
+          g.addEventListener('mouseenter', showTip);
+          g.addEventListener('mousemove',  moveTip);
+          g.addEventListener('mouseleave', hideTip);
+          g.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            showTip(e);
+            setTimeout(hideTip, 2000);
+          }, { passive: false });
+        });
+
+        // Sync legend dots to active theme colors
+        document.querySelectorAll('.legend-dot[data-color]').forEach(dot => {
+          dot.style.background = resolveColor(dot.dataset.color);
+        });
+
+        // Expose filter function — used by legend clicks and hideTip
+        window._applyBubbleFilter = function (cat) {
+          groups.forEach(({ g: og, circle: oc, b: ob }) => {
+            if (!cat || ob.category === cat) {
+              og.style.opacity = '1';
+              oc.setAttribute('fill-opacity', defaultOp);
+            } else {
+              og.style.opacity = '0.08';
+            }
+          });
+          const lbl = document.getElementById('bubble-filter-label');
+          if (lbl) {
+            if (cat) {
+              const n = groups.filter(({ b: ob }) => ob.category === cat).length;
+              lbl.textContent   = n + ' ' + cat + ' skills';
+              lbl.style.visibility = 'visible';
+            } else {
+              lbl.style.visibility = 'hidden';
+            }
+          }
+          document.querySelectorAll('.legend-item[data-category]').forEach(item => {
+            item.classList.toggle('active', item.dataset.category === cat);
+          });
+        };
+
+        // Re-apply any active filter after rebuild (resize / theme toggle)
+        window._applyBubbleFilter(activeCategory);
+      }
+
+      // Legend click filter — delegated once, survives rebuilds
+      document.querySelector('.bubble-legend').addEventListener('click', (e) => {
+        const item = e.target.closest('.legend-item[data-category]');
+        if (!item) return;
+        activeCategory = (activeCategory === item.dataset.category) ? null : item.dataset.category;
+        window._applyBubbleFilter && window._applyBubbleFilter(activeCategory);
+      });
+
+      window._rebuildBubbles = buildChart;
+      let _resizeTimer;
+      window.addEventListener('load',   buildChart);
+      window.addEventListener('resize', () => {
+        clearTimeout(_resizeTimer);
+        _resizeTimer = setTimeout(buildChart, 220);
+      });
+    })();
+  </script>
+
+</body>
+</html>
